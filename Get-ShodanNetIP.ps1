@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
     Synopsis
 .DESCRIPTION
@@ -48,7 +48,7 @@ function Set-ShodanAPIKey
     [CmdletBinding()]
     Param
     (
-        # VirusToral API Key.
+        # Shodan API Key.
         [Parameter(Mandatory=$true,
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
@@ -498,15 +498,15 @@ Add-Type -AssemblyName System.Security
 
 [SecureString]$secStrApiKey | Out-Null
 if(-not $secStrApiKey) {
-    $secStrApiKey = Read-Host 'Enter VirusTotal API Key' -AsSecureString
+    $secStrApiKey = Read-Host 'Enter Shodan API Key' -AsSecureString
     Set-ShodanAPIKey -APIKey $([System.Net.NetworkCredential]::new('', $secStrApiKey).Password)
 }
 
 $data = Get-Content .\subnets.txt | ForEach-Object {Search-ShodanHost -Net $_}
-$out2 = New-Object System.Collections.ArrayList
+$out = New-Object System.Collections.ArrayList
 
 $data.Matches | ForEach-Object {
-    $out2.Add(@{
+    $out.Add([PSCustomObject]@{
         Product     = $_.product
         Protocol    = $_._shodan.module
         Port        = $_.port
@@ -526,6 +526,4 @@ $data.Matches | ForEach-Object {
     ) | Out-Null
 }
     
-$out.GetEnumerator() |
-    Select-Object -Property Key,Value | 
-    Export-Csv test.csv -NoTypeInformation 
+$out | Export-Csv -Path test.csv -NoTypeInformation

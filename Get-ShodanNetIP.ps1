@@ -40,7 +40,17 @@
 
 .EXAMPLE
 
+.NOTES
+    Author: Carlos Perez (@darkoperator)
+            Sam Pursglove
+    Version: 0.01
+    Date: 07 June 2024    
 #>
+[CmdletBinding()]
+Param (
+    [Parameter(Mandatory=$true, ValueFromPipelineByPropertyName=$true, Position=0)]
+    [string]$NetworkInput
+)
 
 #  .ExternalHelp Posh-Shodan.Help.xml
 function Set-ShodanAPIKey
@@ -52,8 +62,7 @@ function Set-ShodanAPIKey
         [Parameter(Mandatory=$true,
                    ValueFromPipelineByPropertyName=$true,
                    Position=0)]
-        [string]
-        $APIKey,
+        [string]$APIKey,
 
         [Parameter(Mandatory=$true,
                    ValueFromPipelineByPropertyName=$true,
@@ -502,7 +511,7 @@ if(-not $secStrApiKey) {
     Set-ShodanAPIKey -APIKey $([System.Net.NetworkCredential]::new('', $secStrApiKey).Password)
 }
 
-$data = Get-Content .\subnets.txt | ForEach-Object {Search-ShodanHost -Net $_}
+$data = Get-Content "$NetworkInput" | ForEach-Object {Search-ShodanHost -Net $_}
 $out = New-Object System.Collections.ArrayList
 
 $data.Matches | ForEach-Object {

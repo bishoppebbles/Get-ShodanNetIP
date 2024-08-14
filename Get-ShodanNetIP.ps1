@@ -48,7 +48,7 @@
 .NOTES
     Author: Carlos Perez (@darkoperator)
             Sam Pursglove
-    Version: 0.02
+    Version: 0.03
     Date: 15 August 2024    
 #>
 [CmdletBinding()]

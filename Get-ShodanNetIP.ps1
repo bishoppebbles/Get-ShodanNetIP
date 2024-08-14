@@ -410,6 +410,8 @@ function Search-ShodanHost
                 $searchobj.pstypenames.insert(0,'Shodan.Host.Search')
                 $searchobj
             
+            } elseif ($Net) {
+                Write-Warning -Message "No matches found: $Net"
             } else {
                 Write-Warning -Message 'No matches found.'
             }

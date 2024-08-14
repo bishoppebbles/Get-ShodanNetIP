@@ -1,10 +1,12 @@
 <#
 .SYNOPSIS
-    Synopsis
+    Takes a list of IPs and/or subnets and queries Shodan using their API.
 .DESCRIPTION
-    Description
-.PARAMETER
-    Description
+    Allows for the quick querying of Shodan results from a list of IPs and/or subnets (one per line).  The results are returned in CSV format.  A Shodan API key is required to use this service.  This code implements API code written by Carlos Perez and includes the required license agreement for code reuse.
+.PARAMETER NetworkInput
+    A list of IPs and/or subnets (one per line) to submit using the Shodan API.
+.PARAMETER Outfile
+    Allows you to optionally change the output CSV file name (default: Shodan_Output.csv).
 .NOTES
     License: BSD-3-clause
      Redistribution and use in source and binary forms, with or without modification,
@@ -37,14 +39,17 @@
 
         Set-ShodanAPIKey
         Search-ShodanHost
-
 .EXAMPLE
-
+    .\Get-ShodanNetIP.ps1 -NetworkInput <ip_list.txt>
+    Import a list of IPs and/or subnets (one per line) and use the Shodan API to query the results.
+.EXAMPLE
+    .\Get-ShodanNetIP.ps1 -NetworkInput <ip_list.txt> -OutFile <output_file_name.csv>
+    Import a list of IPs and/or subnets (one per line) and use the Shodan API to query the results and customize the output CSV file name.
 .NOTES
     Author: Carlos Perez (@darkoperator)
             Sam Pursglove
-    Version: 0.01
-    Date: 07 June 2024    
+    Version: 0.02
+    Date: 15 August 2024    
 #>
 [CmdletBinding()]
 Param (
